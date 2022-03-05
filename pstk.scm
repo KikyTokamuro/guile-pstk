@@ -1,5 +1,5 @@
 ; PS/Tk -- A Portable Scheme Interface to the Tk GUI Toolkit
-; Copyright (C) 2021 Daniil Archangelsky aka Kiky Tokamuro
+; Copyright (C) 2021-2022 Daniil Archangelsky aka Kiky Tokamuro
 ; Copyright (C) 2008 Kenneth A Dickey
 ; Copyright (C) 2006-2008 Nils M Holm
 ; Copyright (C) 2004 Wolf-Dieter Busch
@@ -62,6 +62,8 @@
 ; Thank you!
 ;
 ; Change Log:
+; 2022-03-05 Rewrited on Guile module
+;            Changed "_IONBF" to 'none
 ; 2021-12-01 Deleted all non Guile sections.
 ;            Changed "set-batch-mode?!" to "ensure-batch-mode!".
 ;            Deleted the "bottom" function call.
@@ -96,6 +98,65 @@
 ; 2006-12-03 Added Gambit port and keywords hack.
 ; 2006-12-02 Added Scheme 48 port, portable GENSYM, R5RS fixes.
 ; 2006-12-02 Added PLT/Windows port.
+
+(define-module (pstk)
+  #:export (*wish-program*
+	      *wish-debug-input*
+	      *wish-debug-output*
+	      tk
+	      tk-dispatch-event
+	      tk-end
+	      tk-eval
+	      tk-event-loop
+	      tk-get-var
+	      tk-id->widget
+	      tk-set-var!
+	      tk-start
+	      tk-var
+	      tk-wait-for-window
+	      tk-wait-until-visible
+	      tk-with-lock
+	      tk/after
+	      tk/appname
+	      tk/bell
+	      tk/bgerror
+	      tk/bind
+	      tk/bindtags
+	      tk/caret
+	      tk/choose-color
+	      tk/choose-directory
+	      tk/clipboard
+	      tk/destroy
+	      tk/dialog
+	      tk/event
+	      tk/focus
+	      tk/focus-follows-mouse
+	      tk/focus-next
+	      tk/focus-prev
+	      tk/get-open-file
+	      tk/get-save-file
+	      tk/grab
+	      tk/grid
+	      tk/image
+	      tk/lower
+	      tk/message-box
+	      tk/option
+	      tk/pack
+	      tk/place
+	      tk/popup
+	      tk/raise
+	      tk/scaling
+	      tk/selection
+	      tk/update
+	      tk/useinputmethods
+	      tk/wait
+	      tk/windowingsystem
+	      tk/winfo
+	      tk/wm
+	      ttk-map-widgets
+	      ttk/available-themes
+	      ttk/set-theme
+	      ttk/style))
 
 (use-modules (srfi srfi-88))
 
@@ -266,8 +327,8 @@
             (lambda (prog . args)
               (let ((c2p (pipe))
                     (p2c (pipe)))
-		(setvbuf (cdr c2p) _IONBF)
-		(setvbuf (cdr p2c) _IONBF)
+		(setvbuf (cdr c2p) 'none)
+		(setvbuf (cdr p2c) 'none)
 		(let ((pid (primitive-fork)))
                   (cond ((= pid 0)
 			 (ensure-batch-mode!)

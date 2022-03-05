@@ -1,9 +1,12 @@
 ; PS/Tk Example Program "Tile Themes"
-; Copyright (C) 2021 Daniil Archangelsky aka Kiky Tokamuro
+; Copyright (C) 2021-2022 Daniil Archangelsky aka Kiky Tokamuro
 ; Copyright (C) 2007 Nils M Holm
 ; See the PS/Tk license for conditions of use.
 
-(load "../pstk.scm")
+(add-to-load-path "../")
+
+(use-modules (pstk))
+
 (tk-start)
 (ttk-map-widgets 'all)
 (let ((button

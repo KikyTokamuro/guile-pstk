@@ -3,7 +3,13 @@ PS/TK version (http://mirror.informatimago.com/scheme/www.t3x.org/pstk/index.htm
 
 ### Install
 1. Install the "tcl" and "tk" packages through your package manager.
-2. Copy pstk.scm to your project and load:
+2. Copy pstk.scm to your project and use:
 ```scheme
-(load "pstk.scm")
+(use-modules (pstk))
+```
+
+### Tested on
+```
+GNU Guile 3.0.1
+GNU Guile 2.2.7
 ```

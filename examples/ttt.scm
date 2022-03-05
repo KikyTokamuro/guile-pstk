@@ -1,9 +1,11 @@
 ; PS/Tk Example Program Tic Tac Toe
-; Copyright (C) 2021 Daniil Archangelsky aka Kiky Tokamuro
+; Copyright (C) 2021-2022 Daniil Archangelsky aka Kiky Tokamuro
 ; Copyright (C) 2006 Nils M Holm
 ; See the PS/Tk license for conditions of use.
 
-(load "../pstk.scm")
+(add-to-load-path "../")
+
+(use-modules (pstk))
 
 (define Font "Courier 30")
 
@@ -18,23 +20,22 @@
 
 (define Moves '(((_ o o)  (o o o)) 
                 ((o _ o)  (o o o)) 
-                ((o o _)  (o o o)) 
-                ((_ x x)  (o x x)) 
-                ((x _ x)  (x o x)) 
-                ((x x _)  (x x o)) 
-                ((_ x _)  (o x _)) 
-                ((_ _ x)  (_ o x)) 
-                ((x _ _)  (x o _)) 
-                ((_ x o)  (o x o)) 
-                ((_ o x)  (o o x)) 
-                ((x _ o)  (x o o)) 
-                ((x o _)  (x o o)) 
-                ((o _ x)  (o o x)) 
-                ((o x _)  (o x o)) 
-                ((_ _ o)  (o _ o)) 
-                ((_ o _)  (o o _)) 
-                ((o _ _)  (o _ o)) 
-                ((_ _ _)  (_ o _))))
+		            ((o o _)  (o o o)) 
+		            ((_ x x)  (o x x)) 
+		            ((x _ x)  (x o x)) 
+		            ((x x _)  (x x o)) 
+		            ((_ x _)  (o x _)) 
+		            ((_ _ x)  (_ o x)) 
+		            ((x _ _)  (x o _)) 
+		            ((_ x o)  (o x o)) 
+		            ((_ o x)  (o o x)) 
+		            ((x _ o)  (x o o)) 
+		            ((x o _)  (x o o)) 
+		            ((o _ x)  (o o x)) 
+		            ((o x _)  (o x o)) 
+		            ((_ _ o)  (o _ o)) 
+		            ((o _ _)  (o _ o)) 
+		            ((_ _ _)  (_ o _))))
 
 (define pattern car)
 (define subst cadr)
