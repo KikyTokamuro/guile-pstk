@@ -8,6 +8,15 @@ PS/TK version (http://mirror.informatimago.com/scheme/www.t3x.org/pstk/index.htm
 (use-modules (pstk))
 ```
 
+### Examples
+| Source | Screenshot |
+| --- | --- |
+| [hello.scm](./examples/hello.scm) | ![hello](./images/hello.png) |
+| [hello-color.scm](./examples/hello-color.scm)  | ![hello-color](./images/hello-color.png) |
+| [themes.scm](./examples/themes.scm) | ![themes](./images/themes.png) |
+| [ttt.scm](./examples/ttt.scm) | ![ttt](./images/ttt.png) |
+| [weather](./examples/weather.scm) | ![weather](./images/weather.png) |
+
 ### Tested on
 ```
 GNU Guile 3.0.1
