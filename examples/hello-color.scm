@@ -12,10 +12,10 @@
                   'text: "Hello, World!" 'font: "Helvetica 20"
                   'fg: "#ffff00" 'bg: "#a00000"))
        (change-color
-	 (lambda ()
-	   (let ((c (tk/choose-color)))
-	     (cond ((not (string=? c ""))
-	         (label 'configure 'bg: c))))))
+	(lambda ()
+	  (let ((c (tk/choose-color)))
+	    (cond ((not (string=? c ""))
+	           (label 'configure 'bg: c))))))
        (bt-color (tk 'create-widget 'button
 		     'text: "New Color"
 		     'command: change-color))

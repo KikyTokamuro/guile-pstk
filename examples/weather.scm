@@ -48,4 +48,4 @@
   (tk/grid result 'columnspan: 3 'row: 2 'sticky: 'we 'padx: 5 'pady: 5)
   (tk/grid btn-get 'columnspan: 3 'row: 3 'sticky: 'we 'padx: 5 'pady: 5)
   (tk-event-loop))
-  
+
