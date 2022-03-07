@@ -101,62 +101,63 @@
 
 (define-module (pstk)
   #:export (*wish-program*
-	      *wish-debug-input*
-	      *wish-debug-output*
-	      tk
-	      tk-dispatch-event
-	      tk-end
-	      tk-eval
-	      tk-event-loop
-	      tk-get-var
-	      tk-id->widget
-	      tk-set-var!
-	      tk-start
-	      tk-var
-	      tk-wait-for-window
-	      tk-wait-until-visible
-	      tk-with-lock
-	      tk/after
-	      tk/appname
-	      tk/bell
-	      tk/bgerror
-	      tk/bind
-	      tk/bindtags
-	      tk/caret
-	      tk/choose-color
-	      tk/choose-directory
-	      tk/clipboard
-	      tk/destroy
-	      tk/dialog
-	      tk/event
-	      tk/focus
-	      tk/focus-follows-mouse
-	      tk/focus-next
-	      tk/focus-prev
-	      tk/get-open-file
-	      tk/get-save-file
-	      tk/grab
-	      tk/grid
-	      tk/image
-	      tk/lower
-	      tk/message-box
-	      tk/option
-	      tk/pack
-	      tk/place
-	      tk/popup
-	      tk/raise
-	      tk/scaling
-	      tk/selection
-	      tk/update
-	      tk/useinputmethods
-	      tk/wait
-	      tk/windowingsystem
-	      tk/winfo
-	      tk/wm
-	      ttk-map-widgets
-	      ttk/available-themes
-	      ttk/set-theme
-	      ttk/style))
+	    *wish-debug-input*
+	    *wish-debug-output*
+	    tk
+	    tk-throw
+	    tk-dispatch-event
+	    tk-end
+	    tk-eval
+	    tk-event-loop
+	    tk-get-var
+	    tk-id->widget
+	    tk-set-var!
+	    tk-start
+	    tk-var
+	    tk-wait-for-window
+	    tk-wait-until-visible
+	    tk-with-lock
+	    tk/after
+	    tk/appname
+	    tk/bell
+	    tk/bgerror
+	    tk/bind
+	    tk/bindtags
+	    tk/caret
+	    tk/choose-color
+	    tk/choose-directory
+	    tk/clipboard
+	    tk/destroy
+	    tk/dialog
+	    tk/event
+	    tk/focus
+	    tk/focus-follows-mouse
+	    tk/focus-next
+	    tk/focus-prev
+	    tk/get-open-file
+	    tk/get-save-file
+	    tk/grab
+	    tk/grid
+	    tk/image
+	    tk/lower
+	    tk/message-box
+	    tk/option
+	    tk/pack
+	    tk/place
+	    tk/popup
+	    tk/raise
+	    tk/scaling
+	    tk/selection
+	    tk/update
+	    tk/useinputmethods
+	    tk/wait
+	    tk/windowingsystem
+	    tk/winfo
+	    tk/wm
+	    ttk-map-widgets
+	    ttk/available-themes
+	    ttk/set-theme
+	    ttk/style))
 
 (use-modules (srfi srfi-88))
 
@@ -225,6 +226,24 @@
 (define ttk/set-theme #f)
 (define ttk/style #f)
 
+(define tk-throw
+  (let ((enabled #f))
+    (lambda (args)
+      (if (null? args)
+	  enabled
+	  (set! enabled (car args))))))
+
+(define ->string
+  (lambda (x)
+    (cond ((string? x) x)
+	  ((symbol? x) (symbol->string x))
+	  ((char?   x) (string x))
+	  ((number? x) (number->string x))
+	  (else 
+	   (let ((out (open-output-string)))
+	     (display x out)
+	     (get-output-string out))))))
+
 (letrec
   ((nl (string #\newline))
    (wish-input #f)
@@ -260,13 +279,16 @@
 			  ""
 			  "proc callToScm {callKey args} {"
 			  "    global scmVar"
-			  "    set resultKey [autoName]"
-			  "    puts \"(call $callKey \\\"$resultKey\\\" $args)\""
-			  "    flush stdout"
-			  "    vwait scmVar($resultKey)"
-			  "    set result $scmVar($resultKey)"
-			  "    unset scmVar($resultKey)"
-			  "    set result"
+			  "    if { [catch {"
+                          "            set resultKey [autoName]"
+                          "            puts \"(call $callKey \\\"$resultKey\\\" $args)\""
+                          "            flush stdout"
+                          "            vwait scmVar($resultKey)"
+                          "            set result $scmVar($resultKey)"
+                          "            unset scmVar($resultKey)"
+                          "            set result"
+			  "        } ]"
+			  "    } { exit 1 }"
 			  "}"
 			  ""
 			  "proc tclListToScmList {l} {"
@@ -318,7 +340,9 @@
     (lambda (x)
       (newline)
       (display x)
-      (newline)))
+      (newline)
+      (when (tk-throw)
+	(error 'tk (->string x)))))
 
    (run-program
     (lambda (program)
