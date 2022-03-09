@@ -62,6 +62,8 @@
 ; Thank you!
 ;
 ; Change Log:
+; 2022-03-07 Added tk-throw for turn Tk error to Scheme errors
+;            Added application termination in case of error in pipe to scheme process
 ; 2022-03-05 Rewrited on Guile module
 ;            Changed "_IONBF" to 'none
 ; 2021-12-01 Deleted all non Guile sections.
