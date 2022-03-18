@@ -18,6 +18,7 @@ PS/TK version (http://mirror.informatimago.com/scheme/www.t3x.org/pstk/index.htm
 | [weather](./examples/weather.scm) | ![weather](./images/weather.png) |
 | [canvas](./examples/canvas.scm) | ![canvas](./images/canvas.png) |
 | [slider](./examples/slider.scm) | ![slider](./images/slider.png) |
+| [notebook](./examples/notebook.scm) | ![notebook](./images/notebook.png) |
 
 ### Tested on
 ```
