@@ -3,7 +3,10 @@
 ; Copyright (C) 2007 Nils M Holm
 ; See the PS/Tk license for conditions of use.
 
-(add-to-load-path "../")
+(add-to-load-path
+ (string-append
+  (dirname (current-filename))
+  "/../"))
 
 (use-modules (pstk))
 

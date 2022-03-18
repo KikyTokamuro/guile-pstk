@@ -2,7 +2,10 @@
 ; Copyright (C) 2022 Daniil Archangelsky aka Kiky Tokamuro
 ; See the PS/Tk license for conditions of use.
 
-(add-to-load-path "../")
+(add-to-load-path
+ (string-append
+  (dirname (current-filename))
+  "/../"))
 
 (use-modules (pstk)
 	     (ice-9 format))
